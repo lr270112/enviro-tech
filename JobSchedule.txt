@@ -10,6 +10,8 @@ import java.util.List;
 
 public class JobSchedule {
 
+	final int MAXNUMOFJOBS = 30;
+
 	private List<Job> listOfJobs;		// no more than 30 pending jobs
 	private List<Job> currentWeekJobs;		// no more than 5 jobs per week
 	private List<Volunteer> listOfVolunteers;		// knows a list of volunteers who sign up for a job
@@ -25,7 +27,7 @@ public class JobSchedule {
 
 		if (newJob instanceof Job)
 		{
-			if (listOfJobs.size() <30)
+			if (listOfJobs.size() < MAXNUMOFJOBS)
 				listOfJobs.add(newJob);
 			else
 			{
