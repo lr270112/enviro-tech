@@ -1,0 +1,101 @@
+//Ankit
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class ParkManager extends User {
+	
+	private Scanner keyboard;
+	
+	private List<Park> myManagedParks;
+	
+	public ParkManager() {
+		keyboard = new Scanner(System.in);
+		myManagedParks = new ArrayList<>();
+	}
+	
+	public Job createJob() throws ParseException {
+		// Park manager types 'new job'
+
+		// ask for park name
+		System.out.print("Enter Park Name: ");
+		String parkName = keyboard.nextLine().trim();
+		
+		// ask for park location
+		System.out.print("Enter Location Name: ");
+		String parkLocation = keyboard.nextLine().trim();
+		
+		// ask for number of light volunteer slots
+		System.out.print("Enter Number of Light Volunteers: ");
+		int numLightVolunteers = keyboard.nextInt();
+		keyboard.nextLine();
+		
+		// ask for number of medium volunteer slots
+		System.out.print("Enter Number of Medium Volunteers: ");
+		int numMediumVolunteers = keyboard.nextInt();
+		keyboard.nextLine();
+		
+		// ask for number of heavy volunteer slots
+		System.out.print("Enter Number of Heavy Volunteers: ");
+		int numHeavyVolunteers = keyboard.nextInt();
+		keyboard.nextLine();
+		
+		// format for date
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		// ask for start date
+		System.out.print("Enter Start Date (mm/dd/yyyy): ");
+		Date startDate = dateFormat.parse(keyboard.nextLine().trim());
+		
+		// ask for end date
+		System.out.print("Enter End Date (mm/dd/yyyy): ");
+		Date endDate = dateFormat.parse(keyboard.nextLine().trim());
+		
+		// create new Job
+		Job job = new Job(parkName, parkLocation, 
+				startDate, endDate, 
+				numLightVolunteers, 
+				numMediumVolunteers, 
+				numHeavyVolunteers);
+		
+		return job;
+	}
+	
+	public List<Job> viewUpcomingJobs() {
+		// Park manager types 'view jobs'
+		
+		// get upcoming jobs
+		List<Job> upcomingJobs = Schedule.getManagerJobs(myManagedParks);
+		
+		// output each job
+		for (Job job : upcomingJobs) {
+			System.out.println(job);
+		}
+		
+		return upcomingJobs;
+	}
+	
+	public List<Volunteer> viewJobVolunteers() {
+		// Park manager types 'get job's volunteers'
+		
+		// ask for job id
+		System.out.print("Enter Job ID: ");
+		String jobId = keyboard.nextLine().trim();
+		
+		// get list of volunteers
+		List<Volunteer> volunteers = Schedule.getVolunteerList(jobId);
+		
+		// output each volunteer
+		for (Volunteer volunteer : volunteers) {
+			System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
+		}
+		
+		return volunteers;
+	}
+
+}
