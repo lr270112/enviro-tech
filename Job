@@ -1,0 +1,167 @@
+import java.util.Date;
+import java.util.List;
+
+//Author Leda Rezanejad
+
+public class Job {
+
+	Integer myJobID;
+	String myParkName;
+	String myParkLocation;
+	Integer myTotalVolunteers; 
+	List<Volunteer> myListOfVolunteer;
+	Date myCurrentDate;
+	Date myJobStartingDate;
+	Date myJobEndingDate;
+	int myLightVolunteer;
+	int myMediumVolunteer;
+	int myHeavyVolunteer;
+	int myMaxLightVolunteer;
+	int myMaxMediumVolunteer;
+	int myMaxHeavyVolunteer;
+	
+	public Job(Integer myJobID, String myParkName, String myParkLocation, Integer myTotalVolunteers,
+			Date myCurrentDate, Date myJobStartingDate,Date myJobEndingDate, int myLightVolunteer, 
+			int myMediumVolunteer, int myHeavyVolunteer, int myMaxLightVolunteer, int myMaxMediumVolunteer,
+			int myMaxHeavyVolunteer) {
+		super();
+		this.myJobID = myJobID;
+		this.myParkName = myParkName;
+		this.myParkLocation = myParkLocation;
+		this.myTotalVolunteers = myTotalVolunteers;
+		this.myCurrentDate = myCurrentDate;
+		this.myJobStartingDate = myJobStartingDate;
+		this.myJobEndingDate = myJobEndingDate;
+		this.myLightVolunteer = myLightVolunteer;
+		this.myMediumVolunteer = myMediumVolunteer;
+		this.myHeavyVolunteer = myHeavyVolunteer;
+		this.myMaxLightVolunteer = myMaxLightVolunteer;
+		this.myMaxMediumVolunteer = myMaxMediumVolunteer;
+		this.myMaxHeavyVolunteer = myMaxHeavyVolunteer;
+	}
+
+	//Checks start date is within 90 days of job submission
+	//and checks that start date is in the future
+	public boolean checkDate(Date currentDate, Date startDate){
+		int days = (int)((startDate.getTime() - currentDate.getTime())/(1000 * 60 * 60*24));
+		
+		if(days > 90 || days < 0){
+			System.out.println("The start date and current date are more than 90 days apart");
+			System.out.println("Or the start date is not in the future");
+			return false;
+		}
+		else{
+			System.out.println("The dates are within 90 days of each other");
+			return true; 
+		}
+	}
+	
+	//Checks that start date and end date are within 2 days
+	public boolean maxWorkDays(Date startDate, Date endDate){
+		int days = 0;
+		long diff = endDate.getTime() - startDate.getTime();
+		long diffDays = diff / (24 * 60 * 60 * 1000) + 1; 
+		days = (int) diffDays;
+		if(days > 2){
+			System.out.println("the start date and end date are not within 2 days of each other");
+			return false;
+		}
+		else{
+			System.out.println("the start date and end date are within 2 days of each other");
+			return true; 
+		}
+	}
+	
+	//Checks to see if the list of volunteers is full
+	public boolean isFull(List<Volunteer> volunteers){
+		if(volunteers.size() < myTotalVolunteers){
+			System.out.println("the volunteer list is not full");
+			return false;
+		}
+		else{
+			System.out.println("the volunteer list is full");
+			return true;
+		}
+	}
+	
+	public void addVolunteer(Volunteer newV){
+		myListOfVolunteer.add(newV);
+	}
+	
+	public String getParkName(){
+		return myParkName;
+	}
+	
+	public String getParkLocation(){
+		return myParkLocation;
+	}
+	
+	public Integer getTotalVolunteers(){
+		return myTotalVolunteers;
+	}
+	
+	public List<Volunteer> getListOfVolunteer(){
+		return myListOfVolunteer;
+	}
+	
+	public Date getStartDay(){
+		return myJobStartingDate;
+	}
+	
+	public Date getEndDate(){
+		return myJobEndingDate;
+	}
+	
+	public int getLight(){
+		return myLightVolunteer;
+	}
+	
+	public int getMedium(){
+		return myMediumVolunteer;
+	}
+	
+	public int getHeavy(){
+		return myHeavyVolunteer;
+	}
+
+	public void setMyJobID(Integer myJobID) {
+		this.myJobID = myJobID;
+	}
+
+	public void setMyParkName(String myParkName) {
+		this.myParkName = myParkName;
+	}
+
+	public void setMyParkLocation(String myParkLocation) {
+		this.myParkLocation = myParkLocation;
+	}
+
+	public void setMyTotalVolunteers(Integer myTotalVolunteers) {
+		this.myTotalVolunteers = myTotalVolunteers;
+	}
+
+	public void setMyJobStartingDate(Date myJobStartingDate) {
+		this.myJobStartingDate = myJobStartingDate;
+	}
+
+	public void setMyJobEndingDate(Date myJobEndingDate) {
+		this.myJobEndingDate = myJobEndingDate;
+	}
+
+	public void setMyMediumVolunteer(int myMediumVolunteer) {
+		this.myMediumVolunteer = myMediumVolunteer;
+	}
+
+	public void setMyMaxLightVolunteer(int myMaxLightVolunteer) {
+		this.myMaxLightVolunteer = myMaxLightVolunteer;
+	}
+
+	public void setMyMaxMediumVolunteer(int myMaxMediumVolunteer) {
+		this.myMaxMediumVolunteer = myMaxMediumVolunteer;
+	}
+
+	public void setMyMaxHeavyVolunteer(int myMaxHeavyVolunteer) {
+		this.myMaxHeavyVolunteer = myMaxHeavyVolunteer;
+	}
+	
+}
