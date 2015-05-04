@@ -1,0 +1,21 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+public class UserTest {
+	
+	@Test
+	public void testGetLastName() {
+		
+		User user = new User("First", "Last", "Email@hotmail.com");
+		assertEquals("Last", user.getLastName());
+	}
+
+	@Test
+	public void testGetEmail() {
+		User user = new User("First", "Last", "Email@hotmail.com");
+		assertEquals("Email@hotmail.com", user.getEmail());
+	}
+
+}
