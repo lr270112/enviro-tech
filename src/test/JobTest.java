@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import model.Job;
+
 import org.junit.Before;
 import org.junit.Test;
 
