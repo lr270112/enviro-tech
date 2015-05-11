@@ -6,20 +6,11 @@ import java.util.List;
 
 
 /**
- * 
- */
-
-/**
  * @author Katie Alexander
  *
  */
 public class Volunteer extends User {
-	
-	//Check that you aren't signing up for a job on the same day
-
-	/**Instance of the JobSchedule class.**/
-	private JobSchedule myJobSchedule;
-	
+		
 	/**List of jobs the volunteer is signed up for.**/
 	private List<Job> myJobList;
 	
@@ -27,10 +18,10 @@ public class Volunteer extends User {
 	 * 
 	 * @param theFirstName 
 	 * @param theLastName 
-	 * @param theEmail 
+	 * @param theTitle 
 	 **/
-	public Volunteer(String theFirstName, String theLastName, String theEmail) {
-		super(theFirstName, theLastName, theEmail);
+	public Volunteer(String theFirstName, String theLastName, String theTitle) {
+		super(theFirstName, theLastName, theTitle);
 		myJobList = new ArrayList<Job>();
 	}
 	
@@ -42,26 +33,44 @@ public class Volunteer extends User {
 		//boolean added = true;
 		
 		//For each job in myJobSchedule
+		//Check that you aren't signing up for a job on the same day.
 		for(int i = 0; i < myJobList.size(); i++) {
 			//If the starting date of the new job equals the starting date of a job already signed up for
-			if(newJob.myJobStartingDate == myJobList.get(i).myJobStartingDate || 
-				newJob.myJobStartingDate == myJobList.get(i).myJobEndingDate) {
+			if(newJob.getStartDay().equals(myJobList.get(i).getStartDay()) || 
+				newJob.getStartDay().equals(myJobList.get(i).getEndDate())) {
 				//Return false and do not sign up for that job
+				System.out.println("Sorry you have already signed up for a job on this day");
 				return false;
 				
 			} else if(!checkGrade(newJob, grade)) { //Check if the specified grade is full
-				
+				System.out.println("Sorry there are too many volunteers for this labor level");
 				return false;
 				
-			} else if(!newJob.checkDate(today, newJob.myJobStartingDate)) { //Check if the date is past
-				myJobSchedule.removeJob(newJob);
+			} else if(!newJob.checkDate(today, newJob.getStartDay())) { //Check if the date is past
+				//myJobSchedule.removeJob(newJob);
+				System.out.println("Sorry this job date has passed");
 				return false;
 				
 			}
 		}
 		
+		switch(grade) {
+		case ("Light"):
+			newJob.addLight(this);
+		break;
+		case ("Medium"):
+			newJob.addMedium(this);
+		break;
+		case ("Heavy"):
+			newJob.addHeavy(this);
+		break;
+
+			// TODO
+		}
+		
 		//Add this volunteer to the specified job.
-		myJobSchedule.addVolunteerToJob(this, newJob);
+//		newJob.getListOfVolunteer();
+		JobSchedule.addVolunteerToJob(this, newJob, grade);
 		
 		//Add this job to the volunteers list of jobs
 		addJobToMyList(newJob);
@@ -69,28 +78,19 @@ public class Volunteer extends User {
 		return true;
 	}
 	
-	public boolean checkGrade(Job newJob, String grade) {
+	private boolean checkGrade(Job newJob, String grade) {
 		
 		boolean check = false;
 		
 		switch(grade) {
 			case ("Light"): 
-				if((newJob.myMaxLightVolunteer - newJob.getLight()) > 0) {
-					check = true;
-					newJob.myLightVolunteer++;
-				}
+				check = newJob.checkLight();
 				break; 
 			case ("Medium"): 
-				if((newJob.myMaxMediumVolunteer - newJob.getLight()) > 0) {
-					check = true;
-					newJob.myMediumVolunteer++;
-			}
-			break; 
+				check = newJob.checkMedium();
+				break; 
 			case ("Heavy"): 
-				if((newJob.myMaxHeavyVolunteer - newJob.getLight()) > 0) {
-					check = true;
-					newJob.myHeavyVolunteer++;
-				}
+				check = newJob.checkHeavy();
 				break; 
 		}
 		
@@ -102,23 +102,20 @@ public class Volunteer extends User {
 		
 		myJobList.add(newJob);
 	}
-	
-	/**Prints out the upcoming jobs that the volunteer can sign up for.**/
-	public void viewUpcomingJobs() {
-		
-		for(int i = 0; i < myJobSchedule.getListOfJobs().size(); i++) {
-			//Print information about each job 
-			myJobSchedule.getListOfJobs().get(i).toString();
-		}
+
+	public List<Job> getMyJobList() {
+		return myJobList;
 	}
 	
-	/**Prints out the upcoming jobs that the volunteer has signed up for.**/
-	public void viewMySignedUpJobs() {
+	public String toString() {
+		String str = "";
+		str = getFirstName() + ", " + getLastName();
 		
-		for(int i = 0; i < myJobList.size(); i++) {
-			//Print information about each job 
-			myJobList.get(i).toString();
-		}
+		return str;
+		
 	}
+		
 }
+
+
 

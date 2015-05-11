@@ -7,9 +7,10 @@ package test;
 
 
 import static org.junit.Assert.*;
+import model.Job;
+import model.JobSchedule;
 
 import org.junit.Test;
-
 import org.junit.Before;
 
 

@@ -1,8 +1,10 @@
 package model;
 
+
+
 /**
- * 
- * Ankit
+ * This is my park manager class which is responsible for park manager related jobs. 
+ * @author Ankit Sabhaya
  */
 
 import java.text.ParseException;
@@ -17,7 +19,7 @@ public class ParkManager extends User {
 	
 	private Scanner keyboard;
 	
-//	private List<Park> myManagedParks;
+//	private List<> myManagedParks;
 	
 	public ParkManager(String fname, String lname, String email) {
 		super(fname, lname, email);
@@ -27,19 +29,24 @@ public class ParkManager extends User {
 	
 	public Job createJob() throws ParseException {
 		// Park manager types 'new job'
-
+		System.out.print("Enter A Job ID: ");
+		int jobId = keyboard.nextInt();
+		
 		// ask for park name
 		System.out.print("Enter Park Name: ");
-		String parkName = keyboard.nextLine().trim();
+		String parkName = keyboard.nextLine();
+		keyboard.nextLine();
 		
 		// ask for park location
 		System.out.print("Enter Location Name: ");
-		String parkLocation = keyboard.nextLine().trim();
+		String parkLocation = keyboard.nextLine();
 		
 		// total volunteer
 		System.out.print("Enter total Number of Volunteers: ");
 		int numTotalVolunteers = keyboard.nextInt();
 		keyboard.nextLine();
+		
+		Date currentDate = new Date();
 		
 		// ask for number of light volunteer slots
 		System.out.print("Enter Number of Light Volunteers: ");
@@ -68,30 +75,47 @@ public class ParkManager extends User {
 		Date endDate = dateFormat.parse(keyboard.nextLine().trim());
 		
 		// create new Job
-		Job job = new Job(parkName, parkLocation, numTotalVolunteers,
-				startDate, endDate, 
-				numLightVolunteers, 
-				numMediumVolunteers, 
+		Job job = new Job(jobId, parkName, parkLocation, numTotalVolunteers,
+				currentDate, startDate, endDate, 
+				numLightVolunteers, numMediumVolunteers,
 				numHeavyVolunteers);
 		
-		System.out.println("create job done!");
-		
-		return job;
+		if (job.maxWorkDays(currentDate, startDate, endDate))
+		{
+			if (job.checkDate(currentDate, startDate))
+				return job;
+			else 
+			{
+				job = null;
+				return job;
+			}
+		}
+		else
+		{
+			job = null;
+			return job;
+		}
+//			return job;
 	}
 	
-	public Job createJob(String n, String l, int tl, String s, String e, int lt, int med, int hea) throws ParseException {
+	public Job createJob(int jobId, String parkName, String parkLocation, int numTotalVolunteers,
+			Date currentDate, Date startDate, Date endDate, 
+			int numLightVolunteers, int numMediumVolunteers,
+			int numHeavyVolunteers) throws ParseException {
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date start;
-		Date end;
-		Job job;
+		Job job = new Job(jobId, parkName, parkLocation, numTotalVolunteers,
+				currentDate, startDate, endDate, 
+				numLightVolunteers, numMediumVolunteers,
+				numHeavyVolunteers);
 		
-		
-		start = dateFormat.parse(s);
-		end = dateFormat.parse(e);
-
-
-		job = new Job(n, l, tl, start, end, lt, med, hea);
+		if(!(job.maxWorkDays(currentDate, startDate, endDate))){
+			
+		}else if(!(job.checkDate(currentDate, startDate))){
+			
+		}
+//			job = null;
+//			System.out.println("This job exceeded two work days");
+	
 
 		return job;
 	}
@@ -118,13 +142,13 @@ public class ParkManager extends User {
 //		String jobId = keyboard.nextLine().trim();
 		
 		// get list of volunteers
-		List<Volunteer> volunteers = myParksJob.myListOfVolunteer;
+		List<Volunteer> volunteers = myParksJob.getListOfVolunteer();
 		
 		// output each volunteer
 		if (volunteers != null)
 		{
 			for (Volunteer volunteer : volunteers) {
-				System.out.println(volunteer.getFristName() + " " + volunteer.getLastName());
+				System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
 			}
 		}
 		else

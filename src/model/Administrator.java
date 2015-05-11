@@ -1,17 +1,16 @@
 package model;
 
-/**
- * 
- * Ankit
- */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.hamcrest.core.IsInstanceOf;
+//import org.hamcrest.core.IsInstanceOf;
 
-
+/**
+ * This is my Administrator class which will help search volunteer by last name. 
+ * @author Ankit Sabhaya
+ *
+ */
 public class Administrator extends User {
 	
 	private Scanner keyboard;
@@ -35,6 +34,7 @@ public class Administrator extends User {
 		// get volunteer
 		for (User user : userList)
 		{
+			
 			if (user instanceof Volunteer)
 			{
 //				System.out.println("This is a volunteer.");
@@ -42,8 +42,10 @@ public class Administrator extends User {
 //				System.out.println("You entered " + lastName);
 				if (user.getLastName().equals(lastName))	
 				{
+					
 					found = true;
 					volunteer = (Volunteer) user;
+					break;
 				}
 			}
 		}

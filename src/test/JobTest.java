@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Job;
+import model.Volunteer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class JobTest {
 		Date current = format.parse("05/03/2015");
 		Date starting = format.parse("06/04/2015");
 		Date ending = format.parse("06/05/2015");
-		job = new Job(12345, "woodland", "seattle", 10, current, starting, ending, 2, 3, 6, 4, 3, 7);
+		job = new Job(12345, "woodland", "seattle", 10, current, starting, ending, 2, 3, 6);
 	}
 	
 	@Test
@@ -49,7 +50,7 @@ public class JobTest {
 		Date starting = format.parse("05/06/2015");
 		Date ending = format.parse("05/07/2015");
 		
-		val = job.maxWorkDays(starting, ending);
+		val = job.maxWorkDays(starting, ending, null);
 		
 		assertEquals(ans,val);
 	}
@@ -62,7 +63,7 @@ public class JobTest {
 		List<Volunteer> v = job.getListOfVolunteer();
 		
 		
-		val = job.isFull(v);
+		val = job.isFull();
 		
 		assertEquals(ans,val);
 	}

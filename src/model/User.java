@@ -1,10 +1,18 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 /**
  * @author Katie Alexander
  *
  */
 public class User {
+	
+	public static List<User> userList = new ArrayList<>();
+	
 
 	/**First name of the user.**/
 	private String myFirstName;
@@ -12,14 +20,14 @@ public class User {
 	/**Last name of the user.**/
 	private String myLastName;
 	
-	/**The user's e-mail address.**/
-	private String myEmail;
+	/**The user's title.**/
+	private String myTitle;
 	
-	public User(String theFirstName, String theLastName, String theEmail) {
+	public User(String theFirstName, String theLastName, String title) {
 		
 		myFirstName = theFirstName;
 		myLastName = theLastName;
-		myEmail = theEmail;
+		myTitle = title;
 	}
 	
 	/**Returns the user's last name.**/
@@ -28,9 +36,14 @@ public class User {
 		return myLastName;
 	}
 	
-	/**Returns the user's e-mail.**/
-	public String getEmail() {
-		
-		return myEmail;
+	public String getFirstName() { 
+		return myFirstName;
 	}
+	
+	/**Returns the user's e-mail.**/
+	public String getTitle() {
+		
+		return myTitle;
+	}
+	
 }
